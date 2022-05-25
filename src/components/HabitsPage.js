@@ -99,13 +99,15 @@ export const ContainerHabit = styled.div`
     }
 `
 
-const Header = styled.div`
+export const Header = styled.div`
     width: 100%;
     height: 70px;
     background-color: #126BA5;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
+    top:0;
 
     > img {
       &:first-child {

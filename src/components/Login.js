@@ -46,7 +46,8 @@ export default function Login(){
                 <input type="email" disabled={load} required value={email} onChange={e => setEmail(e.target.value)} placeholder="email" />
                 <input type="text" disabled={load} required value={password} onChange={e => setPassword(e.target.value)} placeholder="senha" />
                 <button disabled={load} type="submit">
-                    {load ? <ThreeDots
+                    {
+                    load ? <ThreeDots
                         color="#ffffff"
                         height={40}
                         width={40}

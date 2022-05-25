@@ -1,15 +1,33 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { CircularProgressbar,buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
-export default function Footer(){
+export default function Footer({value}){
     return(
         <FooterStyle>
-            <h2>Hábitos</h2>
-            <div>
-                <div>
-                    <h4>Hoje</h4>
-                </div>
+            <Link to={"/habitos"} style={{textDecoration: 'none'}}>
+                <h2>Hábitos</h2>
+            </Link>
+            <Link to={"/hoje"} style={{textDecoration: 'none'}}>
+            <div style={{ width: 92, height: 92 }}>
+                <CircularProgressbar 
+                value={10}
+                text={'Hoje'}
+                background
+                backgroundPadding={6}
+                styles={buildStyles({
+                  backgroundColor: "#3e98c7",
+                  textColor: "#fff",
+                  pathColor: "#fff",
+                  trailColor: "transparent"
+                })} 
+                />
             </div>
-            <h2>Histórico</h2>
+            </Link>
+            <Link to={"/historico"} style={{textDecoration: 'none'}}>
+                <h2>Histórico</h2>
+            </Link>
         </FooterStyle>
     );
 }
@@ -22,37 +40,10 @@ const FooterStyle = styled.div`
     background-color: #ffffff;
     width: 100%;
     height: 70px;
-
     bottom: 0;
 
     div{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        width: 92px;
-        height: 92px;
-        background-color: #52B6FF;
-        color: #ffffff;
-        transform: translateY(-30%);
-
-
-        div{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 80px;
-            height: 80px;
-            border: 6px solid #ffffff;
-            border-radius: 50%;
-            border-left-color: transparent;
-            transform: rotate(30deg);
-
-            h4{
-                font-size: 18px;
-                transform: rotate(-30deg);
-            }
-        }
+        transform: translateY(-0.3in);
     }
 
     h2{
