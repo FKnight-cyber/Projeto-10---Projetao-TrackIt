@@ -4,7 +4,8 @@ import styled from "styled-components";
 import logo from "../assets/images/Group 8.png"
 import axios from "axios";
 import UserContext from "../contexts/UserContext";
-import Loading from "./Loading";
+import { ThreeDots } from "react-loader-spinner";
+
 
 export default function Login(){
 
@@ -13,10 +14,12 @@ export default function Login(){
 
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
+    const [load,setLoad] = useState(false)
 
     function requestLogin(event){
         event.preventDefault();
 
+        setLoad(true);
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
         {
             email,
@@ -26,21 +29,31 @@ export default function Login(){
         promise.then(response => {
             setToken(response.data.token);
             setData(response.data);
-            navigate("/habitos");
+            setLoad(false)
+            navigate("/hoje");
         })
 
-        if(!token){
-            <Loading />
-        }
+        promise.catch(Error => {
+            alert(Error.response.data.message);
+            setLoad(false);
+        })
     }
 
     return(
         <Container>
             <img src={logo} alt="" />
             <form onSubmit={requestLogin}>
-                <input type="text" required value={email} onChange={e => setEmail(e.target.value)} placeholder="email" />
-                <input type="text" required value={password} onChange={e => setPassword(e.target.value)} placeholder="senha" />
-                <button type="submit">Entrar</button>
+                <input type="email" disabled={load} required value={email} onChange={e => setEmail(e.target.value)} placeholder="email" />
+                <input type="text" disabled={load} required value={password} onChange={e => setPassword(e.target.value)} placeholder="senha" />
+                <button disabled={load} type="submit">
+                    {load ? <ThreeDots
+                        color="#ffffff"
+                        height={40}
+                        width={40}
+                        ariaLabel="three-circles-rotating"
+                        /> : 'Entrar'
+                    }
+                </button>
             </form>
             <Link to={'/cadastro'} style={{textDecoration: 'none'}}>
                 <h2>Não tem uma conta? Cadastre-se!</h2>
@@ -92,6 +105,13 @@ export const Container = styled.div`
         margin-bottom: 26px;
         font-size: 22px;
         color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+          
+        &:disabled{
+            filter: grayscale(0.3);
+        }
     }
 
     h2{
