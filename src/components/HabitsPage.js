@@ -47,7 +47,7 @@ export default function HabitsPage(){
     }
 
     return(
-        <Container>
+        <ContainerHabit>
             <Header>
                 <h1>TrackIt</h1>
                 <img src={data.image} alt="" />
@@ -75,11 +75,11 @@ export default function HabitsPage(){
             <h3>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h3>
             <Habits />
             <Footer />
-        </Container>
+        </ContainerHabit>
     );
 }
 
-const Container = styled.div`
+export const ContainerHabit = styled.div`
     position: relative;
     display: flex;
     justify-content: center;
