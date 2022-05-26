@@ -1,4 +1,4 @@
-import React from "react"
+import { useState } from "react"
 import {BrowserRouter,Routes,Route } from "react-router-dom"
 import GlobalStyle from "../theme/globalStyles";
 import Login from "./Login";
@@ -9,9 +9,10 @@ import Historic from "./Historic";
 import UserContext from "../contexts/UserContext";
 
 export default function App(){
-    const [token, setToken] = React.useState(false);
-    const [data, setData] = React.useState('');
-    const userContext = {token, setToken,data,setData};
+    const [token, setToken] = useState(false);
+    const [data, setData] = useState('');
+    const [habitData,setHabitData] = useState('');
+    const userContext = {token, setToken,data,setData, habitData, setHabitData};
 
     return(    
             <BrowserRouter>

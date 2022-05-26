@@ -14,7 +14,7 @@ export default function Login(){
 
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
-    const [load,setLoad] = useState(false)
+    const [load,setLoad] = useState(false);
 
     function requestLogin(event){
         event.preventDefault();

@@ -4,15 +4,21 @@ import Footer from "./Footer";
 import { useState,useContext,useEffect } from "react";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
+import Loading from "./Loading";
 
 export default function HabitsPage(){
 
-    const {token, data} = useContext(UserContext);
+    const {token, data, habitData, setHabitData } = useContext(UserContext);
 
-    const [habits,setHabits] = useState('')
-    const [enabled,setEnabled] = useState(false)
+    const [enabled,setEnabled] = useState(false);
+    const [habitName,setHabitName] = useState('');
+    const [habitDays,setHabitDays] = useState([]);
+    const [changeColor,setChangeColor] = useState([false,false,false,false,false,false,false]);
+    const [load,setLoad] = useState(false);
 
     useEffect(()=>{
+        setLoad(true)
         const config = {
             headers: {
               Authorization: `Bearer ${token}`
@@ -23,23 +29,106 @@ export default function HabitsPage(){
             config
           );
           promise.then((res) => {
-            setHabits(res.data);
+            setHabitData(res.data);
+            setLoad(false)
           });
+
+          promise.catch(Error => {
+            setLoad(false);
+            alert(Error.response.data.message)
+        });
     },[])
 
-    function getHabits(){
+    function createHabit(event){
+        event.preventDefault();
+
+        setLoad(true);
         const config = {
             headers: {
-              Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`
             }
-          };
-          const promise = axios.get(
-            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
-            config
+        }
+
+        const body = {
+            name: habitName,
+            days: habitDays
+        }
+
+        const promise = axios.post(
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",body,config
           );
-          promise.then((res) => {
-            setHabits(res.data);
-          });
+
+        promise.then((res) => {
+            setHabitData([...habitData, res.data])
+            setLoad(false);
+            setEnabled(false);
+            setHabitName('');
+            setChangeColor([false,false,false,false,false,false,false]);  
+        }
+        );
+
+        promise.catch(Error => {
+            setLoad(false);
+            alert(Error.response.data.message)
+        });
+    }
+    
+    function checkId(event){
+        console.log(event)
+    }
+
+    function deleteHabit(event){
+        event.preventDefault();
+
+        setLoad(true);
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        const body = {
+            name: habitName,
+            days: habitDays
+        }
+
+        const promise = axios.post(
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",body,config
+          );
+
+        promise.then((res) => {
+            setHabitData([...habitData, res.data])
+            setLoad(false);
+            setEnabled(false);
+            setHabitName('');
+            setChangeColor([false,false,false,false,false,false,false]);  
+        }
+        );
+
+        promise.catch(Error => {
+            setLoad(false);
+            alert(Error.response.data.message)
+        });
+    }
+
+    function checkDay(day){
+        let k = 0;
+        
+        if(!habitDays.includes(day)){
+            setHabitDays([...habitDays, day])
+        }else{
+            const aux = [...habitDays];
+            aux.splice(aux.indexOf(day),1);
+            setHabitDays([...aux]);
+        }
+        if(day === 7){
+            k = 0;
+        }else{
+            k = day;
+        }
+        const aux = [...changeColor];
+        aux[k] = !aux[k]
+        setChangeColor([...aux]);
     }
 
     function toggleHabit(){
@@ -52,28 +141,44 @@ export default function HabitsPage(){
                 <h1>TrackIt</h1>
                 <img src={data.image} alt="" />
             </Header>
+            <Espaço></Espaço>
             <CreateButton>
                 <h1>Meus hábitos</h1>
                 <button onClick={toggleHabit}>+</button>
             </CreateButton>
             <CriarHabito habilitado={enabled}>
-                <input type="text" placeholder="nome do hábito" />
-                <CheckBox>
-                    <div>D</div>
-                    <div>S</div>
-                    <div>T</div>
-                    <div>Q</div>
-                    <div>Q</div>
-                    <div>S</div>
-                    <div>S</div>
-                </CheckBox>
-                <ButtonBox>
-                    <h2 onClick={toggleHabit}>Cancelar</h2>
-                    <button>Salvar</button>
-                </ButtonBox>    
+                <form onSubmit={createHabit}>
+                    <input disabled={load} type="text" value={habitName} onChange={e => setHabitName(e.target.value)} placeholder="nome do hábito" />
+                    <CheckBox>
+                        <Box disabled={load} boxColor={changeColor[0]} onClick={() => checkDay(7)}>D</Box>
+                        <Box disabled={load} boxColor={changeColor[1]} onClick={() => checkDay(1)}>S</Box>
+                        <Box disabled={load} boxColor={changeColor[2]} onClick={() => checkDay(2)}>T</Box>
+                        <Box disabled={load} boxColor={changeColor[3]} onClick={() => checkDay(3)}>Q</Box>
+                        <Box disabled={load} boxColor={changeColor[4]} onClick={() => checkDay(4)}>Q</Box>
+                        <Box disabled={load} boxColor={changeColor[5]} onClick={() => checkDay(5)}>S</Box>
+                        <Box disabled={load} boxColor={changeColor[6]} onClick={() => checkDay(6)}>S</Box>
+                    </CheckBox>
+                    <ButtonBox>
+                        <h2 onClick={toggleHabit}>Cancelar</h2>
+                        <button type="submit">
+                        {
+                        load ? <ThreeDots
+                        color="#ffffff"
+                        height={40}
+                        width={40}
+                        ariaLabel="three-circles-rotating"
+                        /> : "Salvar"
+                        }
+                        </button>
+                    </ButtonBox>  
+                </form>  
             </CriarHabito>
-            <h3>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h3>
-            <Habits />
+            {
+                habitData.length === 0 ? 
+                <h3>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h3> 
+                : <Habits />
+            }
+            <Espaço></Espaço>
             <Footer />
         </ContainerHabit>
     );
@@ -82,9 +187,10 @@ export default function HabitsPage(){
 export const ContainerHabit = styled.div`
     position: relative;
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: #E5E5E5;
+    min-height: 915px;
 
     h2{
         color: #52B6FF;
@@ -107,7 +213,15 @@ export const Header = styled.div`
     justify-content: space-between;
     align-items: center;
     position: fixed;
+    z-index: 1;
     top:0;
+
+    h1{
+        color: #ffffff;
+        font-family: 'Playball', cursive;
+        font-size: 38px;
+        margin-left: 10px;
+    }
 
     > img {
       &:first-child {
@@ -135,10 +249,12 @@ const CriarHabito = styled.div`
     background-color:#ffffff;
     width: 340px;
     height: 180px;
+    padding: 16px;
+    margin-bottom: 12px;
 
     input{
         border: 1px solid #D4D4D4;
-        color:#dbdbdb;
+        color:#666666;
         border-radius:5px;
         font-size: 20px;
         width: 300px;
@@ -148,14 +264,16 @@ const CriarHabito = styled.div`
     }
 `
 
-const CheckBox = styled.div`
+export const CheckBox = styled.div`
     display: flex;
     justify-content:space-evenly;
     margin-top:6px;
     width: 270px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
 
-    div{
+`
+
+const Box = styled.div`
         border: 1px solid #D4D4D4;
         display: flex;
         justify-content:center;
@@ -163,9 +281,8 @@ const CheckBox = styled.div`
         border-radius:5px;
         width: 30px;
         height: 30px;
-        background-color: #ffffff;
-        color:#DBDBDB;
-    }
+        background-color: ${ props => props.boxColor ? '#CFCFCF' : '#ffffff' };
+        color: ${ props => props.boxColor ? '#ffffff' : '#DBDBDB' };
 `
 
 const ButtonBox = styled.div`
@@ -175,6 +292,9 @@ const ButtonBox = styled.div`
     height: 40px;
 
     button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         border: none;
         border-radius: 5px;
         width: 84px;
@@ -208,5 +328,9 @@ const CreateButton = styled.div`
         color: #ffffff;
         font-size:30px;
     }
+`
+
+const Espaço = styled.div`
+    height: 70px;
 `
 
