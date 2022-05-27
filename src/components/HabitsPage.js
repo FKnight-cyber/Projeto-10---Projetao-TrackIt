@@ -5,11 +5,10 @@ import { useState,useContext,useEffect } from "react";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
-import Loading from "./Loading";
 
 export default function HabitsPage(){
 
-    const {token, data, habitData, setHabitData } = useContext(UserContext);
+    const {token, data, habitData, setHabitData, value, setValue } = useContext(UserContext);
 
     const [enabled,setEnabled] = useState(false);
     const [habitName,setHabitName] = useState('');
@@ -28,6 +27,7 @@ export default function HabitsPage(){
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
             config
           );
+
           promise.then((res) => {
             setHabitData(res.data);
             setLoad(false)
@@ -54,55 +54,16 @@ export default function HabitsPage(){
             days: habitDays
         }
 
-        const promise = axios.post(
-            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",body,config
-          );
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",body,config);
 
         promise.then((res) => {
-            setHabitData([...habitData, res.data])
+            setHabitData([...habitData, res.data]);
             setLoad(false);
             setEnabled(false);
             setHabitName('');
-            setChangeColor([false,false,false,false,false,false,false]);  
-        }
-        );
-
-        promise.catch(Error => {
-            setLoad(false);
-            alert(Error.response.data.message)
-        });
-    }
-    
-    function checkId(event){
-        console.log(event)
-    }
-
-    function deleteHabit(event){
-        event.preventDefault();
-
-        setLoad(true);
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`
+            setHabitDays([]);
+            setChangeColor([false,false,false,false,false,false,false]);
             }
-        }
-
-        const body = {
-            name: habitName,
-            days: habitDays
-        }
-
-        const promise = axios.post(
-            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",body,config
-          );
-
-        promise.then((res) => {
-            setHabitData([...habitData, res.data])
-            setLoad(false);
-            setEnabled(false);
-            setHabitName('');
-            setChangeColor([false,false,false,false,false,false,false]);  
-        }
         );
 
         promise.catch(Error => {
@@ -179,7 +140,7 @@ export default function HabitsPage(){
                 : <Habits />
             }
             <Espaço></Espaço>
-            <Footer />
+            <Footer value={value} />
         </ContainerHabit>
     );
 }
@@ -313,6 +274,8 @@ const CreateButton = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-bottom: 14px;
+    padding-left: 18px;
+    padding-right: 18px;
 
     h1{
         font-size: 22px;
@@ -330,7 +293,7 @@ const CreateButton = styled.div`
     }
 `
 
-const Espaço = styled.div`
+export const Espaço = styled.div`
     height: 70px;
 `
 

@@ -7,8 +7,7 @@ const GlobalStyle = createGlobalStyle`
 	box-sizing: border-box;
 }
 
-  body {
-    /* http://meyerweb.com/eric/tools/css/reset/ 
+ /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -38,7 +37,6 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-
 body {
 	line-height: 1;
 }
@@ -57,7 +55,6 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-  }
 `;
  
 export default GlobalStyle;

@@ -12,7 +12,7 @@ export default function Footer({value}){
             <Link to={"/hoje"} style={{textDecoration: 'none'}}>
             <div style={{ width: 92, height: 92 }}>
                 <CircularProgressbar 
-                value={10}
+                value={value}
                 text={'Hoje'}
                 background
                 backgroundPadding={6}

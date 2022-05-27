@@ -12,7 +12,10 @@ export default function App(){
     const [token, setToken] = useState(false);
     const [data, setData] = useState('');
     const [habitData,setHabitData] = useState('');
-    const userContext = {token, setToken,data,setData, habitData, setHabitData};
+    const [todayHabit,setTodayHabit] = useState([]);
+    const [value, setValue] = useState(0);
+    const userContext = {token, setToken, data, setData, habitData, setHabitData,
+    todayHabit, setTodayHabit, value, setValue};
 
     return(    
             <BrowserRouter>

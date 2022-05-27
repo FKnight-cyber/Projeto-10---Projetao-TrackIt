@@ -5,16 +5,18 @@ import logo from "../assets/images/Group 8.png"
 import axios from "axios";
 import UserContext from "../contexts/UserContext";
 import { ThreeDots } from "react-loader-spinner";
+import { IoEyeOffSharp,IoEyeSharp } from "react-icons/io5";
 
 
 export default function Login(){
 
-    const { token, setToken,setData} = useContext(UserContext);
+    const { setToken,setData} = useContext(UserContext);
     const navigate = useNavigate();
 
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const [load,setLoad] = useState(false);
+    const [visibility,setVisibility] = useState(false)
 
     function requestLogin(event){
         event.preventDefault();
@@ -39,12 +41,29 @@ export default function Login(){
         })
     }
 
+    function toggleVisibility(){
+        setVisibility(!visibility);
+    }
+
     return(
         <Container>
             <img src={logo} alt="" />
             <form onSubmit={requestLogin}>
                 <input type="email" disabled={load} required value={email} onChange={e => setEmail(e.target.value)} placeholder="email" />
-                <input type="text" disabled={load} required value={password} onChange={e => setPassword(e.target.value)} placeholder="senha" />
+                <ion-input>
+                    <input type={ visibility ? 'text' : 'password'} 
+                    disabled={load} 
+                    required 
+                    value={password} 
+                    onChange={e => setPassword(e.target.value)} placeholder="senha" 
+                    style={{transform:'translateX(0.08in)'}}
+                    />
+                    {
+                        visibility ? <IoEyeSharp onClick={toggleVisibility} style={{transform:'translateX(-0.22in)'}} />
+                         : 
+                         <IoEyeOffSharp onClick={toggleVisibility} style={{transform:'translateX(-0.22in)'}} />
+                    }
+                </ion-input>
                 <button disabled={load} type="submit">
                     {
                     load ? <ThreeDots
@@ -90,6 +109,7 @@ export const Container = styled.div`
         height: 46px;
         margin-bottom: 6px;
         padding-left: 8px;
+        position: relative;
 
         &::placeholder{
             font-size: 20px;
@@ -119,5 +139,4 @@ export const Container = styled.div`
         color: #52B6FF;
         text-decoration: underline;
     }
-    
 `
