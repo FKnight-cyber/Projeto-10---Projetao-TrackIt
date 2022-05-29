@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState,useContext } from "react";
+import { useState,useContext,useEffect } from "react";
 import styled from "styled-components";
 import logo from "../assets/images/Group 8.png"
 import axios from "axios";
@@ -7,16 +7,41 @@ import UserContext from "../contexts/UserContext";
 import { ThreeDots } from "react-loader-spinner";
 import { IoEyeOffSharp,IoEyeSharp } from "react-icons/io5";
 
-
 export default function Login(){
 
-    const { setToken,setData} = useContext(UserContext);
+    const { setToken,setData,data} = useContext(UserContext);
     const navigate = useNavigate();
 
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const [load,setLoad] = useState(false);
     const [visibility,setVisibility] = useState(false)
+
+    useEffect(()=>{
+        if(localStorage.length > 0){
+        
+            setLoad(true);
+            
+            const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
+            {
+                email: data.email,
+                password: data.password
+            });
+    
+            promise.then(response => {
+                setToken(response.data.token);
+                setData(response.data);
+                setLoad(false);
+                navigate("/hoje");
+            });
+    
+            promise.catch(Error => {
+                alert(Error.response.data.message);
+                setLoad(false);
+            });
+        } 
+    },[])
+    
 
     function requestLogin(event){
         event.preventDefault();
@@ -31,14 +56,15 @@ export default function Login(){
         promise.then(response => {
             setToken(response.data.token);
             setData(response.data);
+            localStorage.setItem('userinfo',JSON.stringify(response.data));
             setLoad(false)
             navigate("/hoje");
-        })
+        });
 
         promise.catch(Error => {
             alert(Error.response.data.message);
             setLoad(false);
-        })
+        });
     }
 
     function toggleVisibility(){

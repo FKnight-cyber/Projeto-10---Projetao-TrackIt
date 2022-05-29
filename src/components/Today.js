@@ -9,7 +9,7 @@ import axios from "axios";
 import 'dayjs/locale/pt-br';
 
 export default function Today(){
-    const {token, data, todayHabit, setTodayHabit, value, setValue} = useContext(UserContext);
+    const {token, data, setTodayHabit, value, setValue} = useContext(UserContext);
 
     useEffect(()=>{
 
@@ -29,13 +29,17 @@ export default function Today(){
                     k++;
                 }
             }
-            setValue((100*(k/response.data.length)).toFixed());     
+            if(response.data.length === 0){
+                setValue(0);
+            }else{
+                setValue((100*(k/response.data.length)).toFixed()); 
+            }   
         });
 
         promise.catch(Error => {
             alert(Error.response.data.message);
         })
-    },[])
+    },[value])
    
     return(
         <ContainerHabit>
@@ -48,7 +52,7 @@ export default function Today(){
                 <h2>{dayjs().locale('pt-br').format('dddd, DD/MM')}</h2>
                 <h3>
                     {
-                        value === 0 ? 'Nenhum hábito concluído ainda' : `${value}% dos hábitos concluídos`
+                        value === 0 || isNaN(value) ? 'Nenhum hábito concluído ainda' : `${value}% dos hábitos concluídos`
                     }
                 </h3>
             </SubTopo>

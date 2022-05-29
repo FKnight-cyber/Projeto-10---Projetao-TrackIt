@@ -8,7 +8,7 @@ import { ThreeDots } from "react-loader-spinner";
 
 export default function HabitsPage(){
 
-    const {token, data, habitData, setHabitData, value, setValue } = useContext(UserContext);
+    const {token, data, habitData, setHabitData, value } = useContext(UserContext);
 
     const [enabled,setEnabled] = useState(false);
     const [habitName,setHabitName] = useState('');
@@ -42,6 +42,11 @@ export default function HabitsPage(){
     function createHabit(event){
         event.preventDefault();
 
+        if(habitDays.length === 0){
+            alert("Você deve selecionar pelo menos um dia!");
+            return;
+        }
+
         setLoad(true);
         const config = {
             headers: {
@@ -73,7 +78,6 @@ export default function HabitsPage(){
     }
 
     function checkDay(day){
-        let k = 0;
         
         if(!habitDays.includes(day)){
             setHabitDays([...habitDays, day])
@@ -82,13 +86,9 @@ export default function HabitsPage(){
             aux.splice(aux.indexOf(day),1);
             setHabitDays([...aux]);
         }
-        if(day === 7){
-            k = 0;
-        }else{
-            k = day;
-        }
+        
         const aux = [...changeColor];
-        aux[k] = !aux[k]
+        aux[day] = !aux[day]
         setChangeColor([...aux]);
     }
 
@@ -111,7 +111,7 @@ export default function HabitsPage(){
                 <form onSubmit={createHabit}>
                     <input disabled={load} type="text" value={habitName} onChange={e => setHabitName(e.target.value)} placeholder="nome do hábito" />
                     <CheckBox>
-                        <Box disabled={load} boxColor={changeColor[0]} onClick={() => checkDay(7)}>D</Box>
+                        <Box disabled={load} boxColor={changeColor[0]} onClick={() => checkDay(0)}>D</Box>
                         <Box disabled={load} boxColor={changeColor[1]} onClick={() => checkDay(1)}>S</Box>
                         <Box disabled={load} boxColor={changeColor[2]} onClick={() => checkDay(2)}>T</Box>
                         <Box disabled={load} boxColor={changeColor[3]} onClick={() => checkDay(3)}>Q</Box>

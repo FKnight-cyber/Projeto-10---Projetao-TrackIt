@@ -10,7 +10,7 @@ import UserContext from "../contexts/UserContext";
 
 export default function App(){
     const [token, setToken] = useState(false);
-    const [data, setData] = useState('');
+    const [data, setData] = useState(JSON.parse(localStorage.getItem("userinfo")));
     const [habitData,setHabitData] = useState('');
     const [todayHabit,setTodayHabit] = useState([]);
     const [value, setValue] = useState(0);

@@ -9,8 +9,6 @@ export default function Habits(){
     const { habitData,setHabitData, token } = useContext(UserContext);
 
     function removeHabit(ID_DO_HABITO){
-        console.log(ID_DO_HABITO)
-
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -41,7 +39,7 @@ export default function Habits(){
                 <IoTrashOutline id={item.id} onClick={e => removeHabit(e.target.id)} />
             </HabitHeader>
             <CheckBox>
-                <Box boxColor={item.days.includes(7)} >D</Box>
+                <Box boxColor={item.days.includes(0)} >D</Box>
                 <Box boxColor={item.days.includes(1)} >S</Box>
                 <Box boxColor={item.days.includes(2)} >T</Box>
                 <Box boxColor={item.days.includes(3)} >Q</Box>

@@ -109,24 +109,20 @@ const Info = styled.div`
         font-size:20px;
         margin-bottom: 6px;
     }
-
     h2{
         color: #666666;
     }
-
     h3{
         color: ${props => 
         (props.current > 1 || props.current === props.highest) && props.current !== 0 ? '#8FC549' : '#666666'};
         transform: translateX(-0.15in);
         font-size: 16px;
     }
-
     h4{
         color: ${props => (props.highest === props.current) && props.highest !== 0 ? '#8FC549' : '#666666'};
         transform: translateX(0.05in);
         font-size: 16px;
     }
-
     div{
         display: flex;
     }
