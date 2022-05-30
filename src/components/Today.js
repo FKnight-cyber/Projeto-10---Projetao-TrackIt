@@ -57,6 +57,7 @@ export default function Today(){
                 </h3>
             </SubTopo>
             <TodayHabits />
+            <Espaço></Espaço>
             <Footer value={value} />
         </ContainerHabit>
     );

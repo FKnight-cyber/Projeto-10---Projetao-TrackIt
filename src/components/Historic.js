@@ -57,18 +57,18 @@ export default function Historic(){
             locale={'pt-br'}
             tileClassName={({ date, view }) => {
                 for(let i = 0; i < historicData.length;i++){
+                    let k = 0;
                     if(historicData[i].day === moment(date).format("DD/MM/YYYY")){
                         for(let j = 0; j < historicData[i].habits.length;j++){
-                            let k = 0;
                             if(historicData[i].habits[j].done === true){
-                                k++
+                                k++;
                             }
-                            if(k === historicData[i].habits.length && historicData[i].day !== today){
-                                return 'fez'
-                            }
-                            if(k !== historicData[i].habits.length && historicData[i].day !== today){
-                                return 'naoFez'
-                            }
+                        }
+                        if(k === historicData[i].habits.length && historicData[i].day !== today){
+                            return 'fez'
+                        }
+                        if(k !== historicData[i].habits.length && historicData[i].day !== today){
+                            return 'naoFez'
                         }
                     }
                 }

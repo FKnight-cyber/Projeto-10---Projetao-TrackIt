@@ -57,6 +57,7 @@ table {
 }
 
 .react-calendar__tile--active{
+	height: 60px;
 	background-color: yellow;
 	color:#000000;
 }
@@ -66,7 +67,6 @@ table {
 	color:#000000;
 }
 .react-calendar__tile.fez{
-	border: solid 8px #ffffff;
 	border-radius: 50%;
 	background-image: radial-gradient(green 30%, #ffffff, #ffffff);
 	color:#000000;
