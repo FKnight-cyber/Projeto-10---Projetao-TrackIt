@@ -294,6 +294,6 @@ const CreateButton = styled.div`
 `
 
 export const Espaço = styled.div`
-    height: 70px;
+    height: 120px;
 `
 

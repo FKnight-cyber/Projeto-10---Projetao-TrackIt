@@ -7,6 +7,7 @@ import HabitsPage from "./HabitsPage";
 import Today from "./Today";
 import Historic from "./Historic";
 import UserContext from "../contexts/UserContext";
+import DayHabits from "./DayHabits";
 
 export default function App(){
     const [token, setToken] = useState(false);
@@ -14,8 +15,9 @@ export default function App(){
     const [habitData,setHabitData] = useState('');
     const [todayHabit,setTodayHabit] = useState([]);
     const [value, setValue] = useState(0);
+    const [historicData, setHistoricData] = useState('');
     const userContext = {token, setToken, data, setData, habitData, setHabitData,
-    todayHabit, setTodayHabit, value, setValue};
+    todayHabit, setTodayHabit, value, setValue,historicData,setHistoricData};
 
     return(    
             <BrowserRouter>
@@ -27,6 +29,7 @@ export default function App(){
                 <Route path="/habitos" element={<HabitsPage />} />
                 <Route path="/hoje" element={<Today />} />
                 <Route path="/historico" element={<Historic />} />
+                <Route path="/:idDay" element={<DayHabits />} />
             </Routes>
             </UserContext.Provider>
             </BrowserRouter>  

@@ -55,6 +55,33 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+.react-calendar__tile--active{
+	background-color: yellow;
+	color:#000000;
+}
+
+.react-calendar__tile.naoFez{
+	background-image: radial-gradient(red 30%, #ffffff, #ffffff);
+	color:#000000;
+}
+.react-calendar__tile.fez{
+	border: solid 8px #ffffff;
+	border-radius: 50%;
+	background-image: radial-gradient(green 30%, #ffffff, #ffffff);
+	color:#000000;
+}
+
+.react-calendar{
+	height: 402px;
+}
+
+.react-calendar_viewContainer{
+	height: 402px;
+}
+.react-calendar__month-view__days{
+	height: 320px;
+}
 `;
  
 export default GlobalStyle;

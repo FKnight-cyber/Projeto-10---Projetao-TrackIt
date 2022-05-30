@@ -39,7 +39,7 @@ export default function Today(){
         promise.catch(Error => {
             alert(Error.response.data.message);
         })
-    },[value])
+    },[value]);
    
     return(
         <ContainerHabit>
