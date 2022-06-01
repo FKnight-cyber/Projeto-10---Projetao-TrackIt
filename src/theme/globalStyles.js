@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
- 
+
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Playball&display=swap');
 
@@ -56,8 +56,7 @@ table {
 	border-spacing: 0;
 }
 
-.react-calendar__tile--active{
-	height: 60px;
+.react-calendar__tile--now{
 	background-color: yellow;
 	color:#000000;
 }
@@ -73,7 +72,7 @@ table {
 }
 
 .react-calendar{
-	height: 402px;
+	height: 420px;
 }
 
 .react-calendar_viewContainer{
@@ -83,5 +82,5 @@ table {
 	height: 320px;
 }
 `;
- 
+
 export default GlobalStyle;

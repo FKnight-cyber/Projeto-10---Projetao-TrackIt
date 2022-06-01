@@ -1,6 +1,6 @@
-import { useContext,useEffect } from "react";
+import { useContext, useEffect } from "react";
 import UserContext from "../contexts/UserContext";
-import { ContainerHabit,Header,Espaço } from "./HabitsPage";
+import { ContainerHabit, Header, Espaço } from "./HabitsPage";
 import Footer from "./Footer";
 import styled from "styled-components";
 import TodayHabits from "./TodayHabits"
@@ -8,10 +8,10 @@ import dayjs from "dayjs";
 import axios from "axios";
 import 'dayjs/locale/pt-br';
 
-export default function Today(){
-    const {token, data, setTodayHabit, value, setValue} = useContext(UserContext);
+export default function Today() {
+    const { token, data, setTodayHabit, value, setValue } = useContext(UserContext);
 
-    useEffect(()=>{
+    useEffect(() => {
 
         const config = {
             headers: {
@@ -19,29 +19,29 @@ export default function Today(){
             }
         }
 
-        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",config);
+        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
 
         promise.then(response => {
-            setTodayHabit(response.data); 
+            setTodayHabit(response.data);
             let k = 0;
-            for(let i = 0;i < response.data.length;i++){
-                if(response.data[i].done === true){
+            for (let i = 0; i < response.data.length; i++) {
+                if (response.data[i].done === true) {
                     k++;
                 }
             }
-            if(response.data.length === 0){
+            if (response.data.length === 0) {
                 setValue(0);
-            }else{
-                setValue((100*(k/response.data.length)).toFixed()); 
-            }   
+            } else {
+                setValue((100 * (k / response.data.length)).toFixed());
+            }
         });
 
         promise.catch(Error => {
             alert(Error.response.data.message);
         })
-    },[value]);
-   
-    return(
+    }, [value]);
+
+    return (
         <ContainerHabit>
             <Header>
                 <h1>TrackIt</h1>
@@ -52,7 +52,7 @@ export default function Today(){
                 <h2>{dayjs().locale('pt-br').format('dddd, DD/MM')}</h2>
                 <h3>
                     {
-                        value === 0 || isNaN(value) ? 'Nenhum hábito concluído ainda' : `${value}% dos hábitos concluídos`
+                        value === '0' || isNaN(value) ? 'Nenhum hábito concluído ainda' : `${value}% dos hábitos concluídos`
                     }
                 </h3>
             </SubTopo>
