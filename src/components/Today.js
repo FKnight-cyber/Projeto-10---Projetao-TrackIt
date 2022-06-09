@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import UserContext from "../contexts/UserContext";
-import { ContainerHabit, Header, Espaço } from "./HabitsPage";
+import { ContainerHabit, Header, Espaço, Espaço2 } from "./HabitsPage";
 import Footer from "./Footer";
 import styled from "styled-components";
 import TodayHabits from "./TodayHabits"
@@ -47,7 +47,7 @@ export default function Today() {
                 <h1>TrackIt</h1>
                 <img src={data.image} alt="" />
             </Header>
-            <Espaço></Espaço>
+            <Espaço2></Espaço2>
             <SubTopo changeColor={value} >
                 <h2>{dayjs().locale('pt-br').format('dddd, DD/MM')}</h2>
                 <h3>
@@ -85,5 +85,15 @@ const SubTopo = styled.div`
         color: ${props => props.changeColor > 0 ? '#8FC549' : '#BABABA'};
         font-size:18px;
         transform: translateX(-0.2in);
+    }
+
+    @media(min-width: 614px){
+        justify-content: center;
+        align-items: center;
+
+        h2{
+            transform: translateX(-0.2in);
+            margin-bottom: 6px;
+        }
     }
 `

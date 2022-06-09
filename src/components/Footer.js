@@ -1,31 +1,31 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { CircularProgressbar,buildStyles } from 'react-circular-progressbar';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-export default function Footer({value}){
-    return(
+export default function Footer({ value }) {
+    return (
         <FooterStyle>
-            <Link to={"/habitos"} style={{textDecoration: 'none'}}>
+            <Link to={"/habitos"} style={{ textDecoration: 'none' }}>
                 <h2>Hábitos</h2>
             </Link>
-            <Link to={"/hoje"} style={{textDecoration: 'none'}}>
-            <div style={{ width: 92, height: 92 }}>
-                <CircularProgressbar 
-                value={value}
-                text={'Hoje'}
-                background
-                backgroundPadding={6}
-                styles={buildStyles({
-                  backgroundColor: "#3e98c7",
-                  textColor: "#fff",
-                  pathColor: "#fff",
-                  trailColor: "transparent"
-                })} 
-                />
-            </div>
+            <Link to={"/hoje"} style={{ textDecoration: 'none' }}>
+                <div style={{ width: 92, height: 92 }}>
+                    <CircularProgressbar
+                        value={value}
+                        text={'Hoje'}
+                        background
+                        backgroundPadding={6}
+                        styles={buildStyles({
+                            backgroundColor: "#3e98c7",
+                            textColor: "#fff",
+                            pathColor: "#fff",
+                            trailColor: "transparent"
+                        })}
+                    />
+                </div>
             </Link>
-            <Link to={"/historico"} style={{textDecoration: 'none'}}>
+            <Link to={"/historico"} style={{ textDecoration: 'none' }}>
                 <h2>Histórico</h2>
             </Link>
         </FooterStyle>

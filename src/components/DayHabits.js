@@ -1,23 +1,24 @@
 import styled from "styled-components";
 import CalendarHabit from "./CalendarHabit";
 import Footer from "./Footer";
+import { Espaço2 } from "./HabitsPage";
 import { useContext } from "react";
 import UserContext from "../contexts/UserContext";
 import { useParams } from "react-router-dom";
 
-export default function HabitsPage(){
+export default function HabitsPage() {
 
-    const {data, value } = useContext(UserContext);
+    const { data, value } = useContext(UserContext);
 
     const idDay = useParams();
 
-    return(
+    return (
         <ContainerHabit>
             <Header>
                 <h1>TrackIt</h1>
                 <img src={data.image} alt="" />
             </Header>
-            <Espaço></Espaço>
+            <Espaço2></Espaço2>
             <CreateButton>
                 <h1>Hábitos do dia {idDay.idDay}</h1>
             </CreateButton>
@@ -120,8 +121,12 @@ const CreateButton = styled.div`
         color: #ffffff;
         font-size:30px;
     }
+
+    @media(min-width: 614px){
+        justify-content: center;
+    }
 `
 
-export const Espaço = styled.div`
+const Espaço = styled.div`
     height: 120px;
 `
