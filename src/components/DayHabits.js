@@ -48,6 +48,10 @@ export const ContainerHabit = styled.div`
         color:#666666;
         font-size:18px;
     }
+
+    @media(min-width: 614px){
+        min-height: 700px;
+    }
 `
 
 export const Header = styled.div`
